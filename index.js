@@ -6,6 +6,7 @@ const typeDefs = gql`
         sayHi: String!
     }
 `
+
 const resolvers = {
     Query: {
         sayHi: () => "Hello World" 
