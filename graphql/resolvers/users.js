@@ -11,7 +11,7 @@ const generateToken = (user) => {
         id: user.id,
         email: user.email,
         userName: user.userName
-    }, SECRET_KEY, { expiresIn: '1hr' });
+    }, SECRET_KEY, { expiresIn: '1h' });
 }
 
 module.exports = {
