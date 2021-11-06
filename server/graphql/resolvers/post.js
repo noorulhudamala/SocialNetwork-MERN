@@ -7,7 +7,7 @@ module.exports = {
   Query: {
     getPosts: async () => {
       try {
-        const posts = await Post.find().sort({createdAt: 1});
+        const posts = await Post.find().sort({ createdAt: 1 });
         return posts;
       } catch (err) {
         console.log(err);
@@ -31,7 +31,10 @@ module.exports = {
   Mutation: {
     createPost: async (_, { body }, context) => {
       const user = checkAuth(context);
-      const newPost = new Post({ body, user: user.id, userName: user.userName, createdAt: new Date().toISOString()})
+      if (body.trim() === "") {
+        throw new Error("Post body cannot be empty");
+      }
+      const newPost = new Post({ body, user: user.id, userName: user.userName, createdAt: new Date().toISOString() })
       const post = await newPost.save()
       return post;
     },
@@ -56,15 +59,15 @@ module.exports = {
       if (post) {
         if (post.likes.find(like => like.userName === userName)) {
           //post already liked, unlike it
-          post.likes = post.likes.filter(like=> like.userName !== userName)
+          post.likes = post.likes.filter(like => like.userName !== userName)
         } else {
           post.likes.push({
             userName,
             createdAt: new Date().toISOString()
           })
-          
+
         }
-      await post.save();
+        await post.save();
         return post
       } else {
         throw new UserInputError("Post not found")
