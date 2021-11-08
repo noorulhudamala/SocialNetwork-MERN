@@ -19,9 +19,9 @@ const App = () => {
       <div className="ui container">
         <MenuBar />
         <Routes>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />
+          <Route path="/" element={<Home/>} />
+          <Route path="/register" element={<Register/>} />
+          <Route path="/login" element={<Login/>} />
         </Routes>
       </div>
     </Router>
