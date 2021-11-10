@@ -1,14 +1,24 @@
 import React from 'react'
-import { InMemoryCache, ApolloProvider, ApolloClient} from '@apollo/client'
+import { InMemoryCache, ApolloProvider, ApolloClient, createHttpLink} from '@apollo/client'
+import {setContext} from 'apollo-link-context'
 
 import App from './App'
 
+const httpLink = createHttpLink({
+    uri: "http://localhost:5000/"
+})
+const authLink = setContext(() => {
+    const token = localStorage.getItem("jwtToken")
+    return {
+        headers: {
+            Authorization: token ? `Bearer ${token}` : ""
+        }
+    }
+})
 
 const client = new ApolloClient ({
-
-    
     cache: new InMemoryCache({}),
-    uri: "http://localhost:5000/graphql"
+    link: authLink.concat(httpLink)
 })
 
 const ApolloProviderWrapper = () =>    (
