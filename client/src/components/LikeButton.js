@@ -11,7 +11,7 @@ export default function LikeButton({ user, post: { id, likes } }) {
         onError: () => { }
     })
     useEffect(() => {
-        if (user && likes.find(like => like.userName === user.userName)) {
+        if (user && likes?.find(like => like.userName === user.userName)) {
             setLiked(true)
         } else setLiked(false)
     }, [user, likes])
@@ -35,7 +35,7 @@ export default function LikeButton({ user, post: { id, likes } }) {
         <Button as="div" labelPosition="right" onClick={likePost}>
             {likeButton}
             <Label basic color="teal" pointing="left">
-                {likes.length}
+                {likes?.length}
             </Label>
         </Button>
     )
